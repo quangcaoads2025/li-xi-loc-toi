@@ -18,11 +18,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <script>
-    var spinFrameId; // Biến dùng cho vòng quay (giữ nguyên)
+    var spinFrameId; 
   </script>
 
   <style>
-    /* --- CSS CỦA GIAO DIỆN ĐĂNG NHẬP MỚI --- */
     :root{
       --bg1:#c80b23;
       --bg2:#ffb26b;
@@ -242,10 +241,8 @@
       .na-grid{ display:none; }
     }
 
-    /* Ẩn nội dung chính ban đầu */
     #main-app-content { display: none; }
 
-    /* --- CSS CỦA VÒNG QUAY --- */
     .form-group { margin-bottom: 16px; text-align: left; }
     .form-label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 14px; color: #333; }
     .required-mark { color: #d60000; margin-left: 4px; }
@@ -343,18 +340,17 @@
     .NAactions button{ border:0; cursor:pointer; padding: 12px 18px; border-radius: 999px; font-weight: 1000; letter-spacing: .4px; background: linear-gradient(135deg,#ffb200,#ffe29a); color:#111; box-shadow: 0 18px 36px rgba(0,0,0,.16); }
     .NArightPane{ border-radius: 16px; overflow:hidden; position: relative; min-height: 360px; background: #f7f7f7; border: 1px solid rgba(0,0,0,.06); }
     
-    /* --- CSS 8/3 --- */
     .women8march { height: 100%; min-height: 360px; width: 100%; position: relative; display: flex; justify-content: center; align-items: center; flex-direction: column; overflow: hidden; border-radius: 16px; background: linear-gradient(135deg,#ff4e8a,#ff99ac,#ffc3a0); background-size: 400% 400%; animation: bgmove 8s infinite; font-family: 'Montserrat', sans-serif; color: white; }
     @keyframes bgmove { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
     .flower { position: relative; width: 120px; height: 120px; margin-bottom: 20px; z-index: 5; }
     .petal { position: absolute; width: 80px; height: 80px; background: radial-gradient(circle,#ff4d6d,#ff8fab); border-radius: 50%; opacity: 0; }
-    .p1 { top: -20px; left: 20px; animation: bloom 1.5s forwards; }
-    .p2 { top: 20px; left: -20px; animation: bloom 1.5s forwards .2s; }
-    .p3 { top: 20px; right: -20px; animation: bloom 1.5s forwards .4s; }
-    .p4 { bottom: -20px; left: 20px; animation: bloom 1.5s forwards .6s; }
-    .p5 { top: 20px; left: 20px; animation: bloom 1.5s forwards .8s; }
+    .p1 { top: -20px; left: 20px; animation: bloom 0.8s forwards; }
+    .p2 { top: 20px; left: -20px; animation: bloom 0.8s forwards 0.1s; }
+    .p3 { top: 20px; right: -20px; animation: bloom 0.8s forwards 0.2s; }
+    .p4 { bottom: -20px; left: 20px; animation: bloom 0.8s forwards 0.3s; }
+    .p5 { top: 20px; left: 20px; animation: bloom 0.8s forwards 0.4s; }
     .center { width: 40px; height: 40px; background: #ffd166; border-radius: 50%; position: absolute; top: 40px; left: 40px; animation: pulse 2s infinite; }
-    .women8march .text { text-align: center; opacity: 0; animation: showText 2s forwards 1.6s; z-index: 6; padding: 0 10px; }
+    .women8march .text { text-align: center; opacity: 0; animation: showText 1s forwards 0.3s; z-index: 6; padding: 0 10px; }
     .women8march .text h1 { font-size: 80px; margin: 0; font-weight: 900; background: linear-gradient(#fff,#ffd6e0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px rgba(255,255,255,0.7); animation: float 3s ease-in-out infinite; line-height: 1; }
     .women8march .text p { font-size: 18px; font-weight: 700; margin: 10px 0 5px; letter-spacing: 1px; text-shadow: 1px 1px 4px rgba(0,0,0,0.2); }
     .women8march .text span { font-size: 13px; opacity: .9; font-style: italic; }
@@ -654,15 +650,7 @@
                 </div>
               </div>
 
-              <div class="NAenvWrap" id="NAenvWrap" style="position: absolute; inset: 0; pointer-events: none;">
-                <img class="NAenvImg" id="NAenvImg" src="https://bydthanhcong.vn/wp-content/uploads/2026/01/baolixi.png" style="opacity: 0;" alt="Tàng hình" />
-                <div class="NAenvMouth" aria-hidden="true" style="display: none;">
-                  <div class="NAflap"></div>
-                  <div class="NAinnerGlow"></div>
-                </div>
-                <div class="NApopCash" id="NApopCash" aria-hidden="true" style="display: none;"></div> <div class="NAmoneyLayer" id="NAmoneyLayer" aria-hidden="true" style="z-index: 21;"></div>
-                <div class="NAsparkLayer" id="NAsparkLayer" aria-hidden="true" style="z-index: 22;"></div>
-              </div>
+              <div class="NAsparkLayer" id="NAsparkLayer" style="position: absolute; inset: 0; pointer-events: none; z-index: 22;"></div>
 
             </div>
           </div>
@@ -701,14 +689,27 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <script>
+    document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    document.addEventListener('keydown', function (e) {
+      var key = (e.key || '').toLowerCase();
+      var isCtrl = !!e.ctrlKey;
+      var isShift = !!e.shiftKey;
+      var forbiddenCtrl = { u:1, s:1, p:1 }; 
+      if (e.key === 'F12' || (isCtrl && isShift && (key === 'i' || key === 'j' || key === 'c')) || (isCtrl && forbiddenCtrl[key])) {
+        e.preventDefault();
+      }
+    });
+    document.body.style.userSelect = 'none';
+    document.body.style.webkitUserSelect = 'none';
+    document.addEventListener('copy', function (e) { if (e.target.tagName !== 'INPUT') e.preventDefault(); });
+    document.addEventListener('cut', function (e) { if (e.target.tagName !== 'INPUT') e.preventDefault(); });
+
     const btnLogin = document.getElementById('btnLogin');
     const loginError = document.getElementById('loginError');
 
-    // Kiểm tra xem trình duyệt đã lưu chìa khóa đăng nhập chưa
     if (localStorage.getItem('NA_LOGGED_IN') === 'true') {
         document.getElementById('loginPage').style.display = 'none';
         document.getElementById('main-app-content').style.display = 'block';
-        
         window.addEventListener('DOMContentLoaded', function() {
             if (typeof window.showPopup === 'function') {
                 window.showPopup(); 
@@ -727,37 +728,21 @@
         return;
       }
 
-      // KIỂM TRA TRỰC TIẾP TRÊN TRÌNH DUYỆT (OFFLINE)
       if (user === 'admin' && pass === 'admin123@') {
         loginError.style.display = 'none';
-        
-        if (remember) {
-            localStorage.setItem('NA_LOGGED_IN', 'true');
-        } else {
-            localStorage.removeItem('NA_LOGGED_IN');
-        }
-
+        if (remember) { localStorage.setItem('NA_LOGGED_IN', 'true'); } 
+        else { localStorage.removeItem('NA_LOGGED_IN'); }
         document.getElementById('loginPage').style.display = 'none';
         document.getElementById('main-app-content').style.display = 'block';
-        if (typeof window.showPopup === 'function') {
-          window.showPopup(); 
-        }
+        if (typeof window.showPopup === 'function') { window.showPopup(); }
       } else {
         loginError.textContent = 'Sai thông tin đăng nhập!';
         loginError.style.display = 'block';
       }
     });
 
-    document.getElementById('loginPass').addEventListener('keydown', e => {
-      if(e.key === 'Enter'){
-        btnLogin.click();
-      }
-    });
-    document.getElementById('loginUser').addEventListener('keydown', e => {
-      if(e.key === 'Enter'){
-        btnLogin.click();
-      }
-    });
+    document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key === 'Enter'){ btnLogin.click(); } });
+    document.getElementById('loginUser').addEventListener('keydown', e => { if(e.key === 'Enter'){ btnLogin.click(); } });
   </script>
 
   <script type="text/javascript">
@@ -784,12 +769,9 @@
       var popup = document.getElementById('qcadsPopup') || document.querySelector('.popup-widget');
       if (!popup) return;
       popup.style.display = 'flex';
-
       if (typeof confetti !== 'undefined') {
         confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
-        setTimeout(function () {
-          confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
-        }, 500);
+        setTimeout(function () { confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } }); }, 500);
       }
     };
     window.qcadsHidePopup = function () {
@@ -806,11 +788,7 @@
     var NAviewInfo = document.getElementById('NAviewInfo');
     var NAwinValue = document.getElementById('NAwinValue');
     var NAvoucherCode = document.getElementById('NAvoucherCode');
-    var NApopCash = document.getElementById('NApopCash');
-    var NAmoneyLayer = document.getElementById('NAmoneyLayer');
     var NAsparkLayer = document.getElementById('NAsparkLayer');
-    var NAenvWrap = document.getElementById('NAenvWrap');
-    var NAenvImg = document.getElementById('NAenvImg');
     var NApPreview = document.getElementById('NApreviewImg');
 
     var MONEY_IMG = {
@@ -824,8 +802,6 @@
     };
 
     var LIXI_MAP = [100, 150, 200, 250, 300, 400, 500];
-
-    var mouthX = 0.50, mouthY = 0.48, mouthW = "56%", mouthH = "18%";
 
     function NA_rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
 
@@ -844,38 +820,14 @@
       NAviewInfo.style.display = "none";
       NAviewLixi.style.display = "";
     }
-    function NA_showInfoView(){
-      NAviewLixi.style.display = "none";
-      NAviewInfo.style.display = "";
-    }
 
     function NA_clearFX(){
-      if (NAmoneyLayer) NAmoneyLayer.innerHTML = "";
       if (NAsparkLayer) NAsparkLayer.innerHTML = "";
-      if (NApopCash) NApopCash.innerHTML = "";
-      if (NAenvWrap) NAenvWrap.classList.remove('opening');
-    }
-
-    function NA_getMouthPos(){
-      var rect = NAenvImg.getBoundingClientRect();
-      var wrapRect = NAenvWrap.getBoundingClientRect();
-      var x = (rect.left - wrapRect.left) + rect.width  * mouthX;
-      var y = (rect.top  - wrapRect.top ) + rect.height * mouthY;
-      return { x: x, y: y };
     }
 
     function NA_burst(win){
-      NAenvWrap.style.setProperty('--mx', (mouthX*100) + '%');
-      NAenvWrap.style.setProperty('--my', (mouthY*100) + '%');
-      NAenvWrap.style.setProperty('--mw', mouthW);
-      NAenvWrap.style.setProperty('--mh', mouthH);
-
       NA_clearFX();
-      void NAenvWrap.offsetWidth;
-      NAenvWrap.classList.add('opening');
-
       var url = MONEY_IMG[win] || "";
-      
       if (url) {
         NApPreview.src = url;
         NApPreview.style.opacity = "1";
@@ -884,57 +836,14 @@
         NApPreview.style.opacity = "0";
       }
 
-      if (url) {
-        var im = document.createElement('img');
-        im.src = url;
-        im.alt = "Quà tặng";
-        NApopCash.appendChild(im);
-      }
-
       if (typeof win === 'number') {
           setTimeout(function(){
-            var pos = NA_getMouthPos();
-            var cashCount = (win >= 500) ? 16 : (win >= 400) ? 14 : (win >= 300) ? 12 : 10;
-            var coinCount = (win >= 500) ? 22 : 18;
             var sparkCount = (win >= 500) ? 42 : 34;
-
-            var i, spread, wMin, wMax;
-
-            for(i=0;i<cashCount;i++){
-              if (!url) break;
-              var img = document.createElement('img');
-              img.className = 'NAcash';
-              img.src = url;
-              img.style.setProperty('--sx', pos.x + 'px');
-              img.style.setProperty('--sy', pos.y + 'px');
-              spread = (win >= 500) ? 220 : 185;
-              img.style.setProperty('--tx', NA_rand(-spread, spread) + 'px');
-              img.style.setProperty('--ty', NA_rand(-270, -85) + 'px');
-              img.style.setProperty('--rot', NA_rand(-320, 320) + 'deg');
-              wMin = (win >= 500) ? 74 : 68;
-              wMax = (win >= 500) ? 112 : 100;
-              img.style.setProperty('--w', NA_rand(wMin, wMax) + 'px');
-              img.style.animationDelay = (i * 0.022) + 's';
-              NAmoneyLayer.appendChild(img);
-            }
-            
-            for(i=0;i<coinCount;i++){
-               var c = document.createElement('div');
-               c.className = 'NAcoin';
-               c.style.setProperty('--sx', pos.x + 'px');
-               c.style.setProperty('--sy', pos.y + 'px');
-               c.style.setProperty('--tx', NA_rand(-220, 220) + 'px');
-               c.style.setProperty('--ty', NA_rand(-250, -40) + 'px');
-               c.style.setProperty('--rot', NA_rand(-340, 340) + 'deg');
-               c.style.setProperty('--d', NA_rand(22, 46) + 'px');
-               c.style.animationDelay = (i * 0.015) + 's';
-               NAmoneyLayer.appendChild(c);
-            }
-            for(i=0;i<sparkCount;i++){
+            for(var i=0; i<sparkCount; i++){
                var s = document.createElement('div');
                s.className = 'NAspark';
-               s.style.setProperty('--sx', pos.x + 'px');
-               s.style.setProperty('--sy', pos.y + 'px');
+               s.style.setProperty('--sx', '50%');
+               s.style.setProperty('--sy', '50%');
                s.style.setProperty('--tx', NA_rand(-240, 240) + 'px');
                s.style.setProperty('--ty', NA_rand(-290, 60) + 'px');
                s.style.animationDelay = (i * 0.01) + 's';
@@ -959,11 +868,8 @@
     function qcadsFormatResult(win) {
         if (typeof win === 'number') {
             return (win * 1000).toLocaleString('vi-VN') + "đ";
-        } else {
-            if (win === "Vali") return "Vali Cao Cấp";
-            if (win === "TaiNghe") return "Tai Nghe AirPods";
-            return win;
         }
+        return win;
     }
 
     if (NAclaimBtn) NAclaimBtn.addEventListener('click', function(){
@@ -974,10 +880,7 @@
 
       if (nameEl) nameEl.innerText = String(window.pendingUserName || "");
       if (codeEl) codeEl.innerText = String(window.NA_LAST_CODE || "NA000000");
-      
-      if (moneyEl) {
-          moneyEl.innerText = qcadsFormatResult(window.NA_LAST_WIN);
-      }
+      if (moneyEl) { moneyEl.innerText = qcadsFormatResult(window.NA_LAST_WIN); }
 
       if (box) box.style.display = 'block';
 
@@ -1001,9 +904,7 @@
       });
     }
     document.addEventListener('keydown', function(e){
-      if (e.key === 'Escape' && NAoverlay && NAoverlay.classList.contains('show')) {
-        NA_clearFX(); NA_hide();
-      }
+      if (e.key === 'Escape' && NAoverlay && NAoverlay.classList.contains('show')) { NA_clearFX(); NA_hide(); }
     });
 
     var canvas = document.getElementById("wheel");
@@ -1012,23 +913,13 @@
     var center = size / 2;
 
     var segments = [
-      "Lì Xì<br>100.000đ",
-      "Lì Xì<br>150.000đ",
-      "Lì Xì<br>200.000đ",
-      "Lì Xì<br>250.000đ",
-      "Lì Xì<br>300.000đ",
-      "Lì Xì<br>400.000đ",
-      "Lì Xì<br>500.000đ",
+      "Lì Xì<br>100.000đ", "Lì Xì<br>150.000đ", "Lì Xì<br>200.000đ", "Lì Xì<br>250.000đ",
+      "Lì Xì<br>300.000đ", "Lì Xì<br>400.000đ", "Lì Xì<br>500.000đ",
     ];
 
     var colors = [
-     ["#A8E6CF","#56C596"],
-     ["#4FACFE","#0052D4"],
-     ["#FF9A9E","#F6416C"],
-     ["#FFE259","#FFA751"],
-     ["#43E97B","#11998E"],
-     ["#667EEA","#764BA2"],
-     ["#ff5ebc","#c7007a"]
+     ["#A8E6CF","#56C596"], ["#4FACFE","#0052D4"], ["#FF9A9E","#F6416C"], ["#FFE259","#FFA751"],
+     ["#43E97B","#11998E"], ["#667EEA","#764BA2"], ["#ff5ebc","#c7007a"]
     ];
 
     var arc = (2 * Math.PI) / segments.length;
@@ -1040,37 +931,21 @@
         var cbName = "qcads_cb_" + Date.now() + "_" + Math.floor(Math.random()*100000);
         params = params || {};
         params.callback = cbName;
-
         var qs = [];
         for (var k in params) {
           if (!params.hasOwnProperty(k)) continue;
           qs.push(encodeURIComponent(k) + "=" + encodeURIComponent(String(params[k])));
         }
-
         var script = document.createElement("script");
         script.src = url + (url.indexOf("?") >= 0 ? "&" : "?") + qs.join("&");
-
-        var timer = setTimeout(function(){
-          cleanup();
-          reject(new Error("timeout"));
-        }, timeoutMs);
-
-        window[cbName] = function(data){
-          cleanup();
-          resolve(data);
-        };
-
+        var timer = setTimeout(function(){ cleanup(); reject(new Error("timeout")); }, timeoutMs);
+        window[cbName] = function(data){ cleanup(); resolve(data); };
         function cleanup(){
           clearTimeout(timer);
           if (script && script.parentNode) script.parentNode.removeChild(script);
           try { delete window[cbName]; } catch(e){ window[cbName] = undefined; }
         }
-
-        script.onerror = function(){
-          cleanup();
-          reject(new Error("network"));
-        };
-
+        script.onerror = function(){ cleanup(); reject(new Error("network")); };
         document.body.appendChild(script);
       });
     }
@@ -1082,26 +957,20 @@
         grad.addColorStop(0, colors[i][0]);
         grad.addColorStop(1, colors[i][1]);
         ctx.fillStyle = grad;
-
         ctx.beginPath();
         ctx.moveTo(center, center);
         ctx.arc(center, center, center, angle, angle + arc, false);
         ctx.fill();
-
         ctx.save();
         ctx.translate(center, center);
         ctx.rotate(angle + arc / 2);
         ctx.fillStyle = "white";
-        
-        /* Cập nhật font chữ và khoảng cách để chữ không bị tràn */
         ctx.font = "bold 15px Montserrat, sans-serif";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-
         var lines = segments[i].split("<br>");
         var lineHeight = 18;
         var textRadius = center - 55;
-
         for (var j = 0; j < lines.length; j++) {
           var lineY = (j - (lines.length - 1) / 2) * lineHeight;
           ctx.fillText(lines[j].trim(), textRadius, lineY);
@@ -1114,38 +983,25 @@
     function qcadsAllocPrizeFromApi() {
       var form = document.getElementById("registerForm");
       var phone = form && form.elements["phone"] ? form.elements["phone"].value.trim() : "";
-
       var addressInput = document.querySelector('input[name="address"]');
       var carInput = document.querySelector('[name="car"]');
       var noteInput = document.querySelector('select[name="note"]');
-
       var params = {
-        action: "alloc",
-        phone: phone,
-        name: window.pendingUserName || "",
-        address: addressInput ? addressInput.value.trim() : "",
-        car: carInput ? carInput.value.trim() : "",
-        note: noteInput ? noteInput.value.trim() : "",
-        coupon: window.pendingCouponCode || ""
+        action: "alloc", phone: phone, name: window.pendingUserName || "",
+        address: addressInput ? addressInput.value.trim() : "", car: carInput ? carInput.value.trim() : "",
+        note: noteInput ? noteInput.value.trim() : "", coupon: window.pendingCouponCode || ""
       };
-
       return qcadsJsonp(QCADS_API_URL, params, 12000);
     }
 
     function spin() {
       if (spinning) return;
       spinning = true;
-
-      var currentDeg = 0;       
-      var speed = 25;           
-      var isApiReturned = false; 
-      var apiResult = null;     
+      var currentDeg = 0, speed = 25, isApiReturned = false, apiResult = null;     
 
       function fakeSpinLoop() {
         if (isApiReturned) return;
-
         currentDeg += speed; 
-        
         ctx.clearRect(0, 0, size, size);
         ctx.save();
         ctx.translate(center, center);
@@ -1153,55 +1009,35 @@
         ctx.translate(-center, -center);
         drawWheel();
         ctx.restore();
-
         spinFrameId = requestAnimationFrame(fakeSpinLoop); 
-    }
-      
+      }
       requestAnimationFrame(fakeSpinLoop);
 
-      qcadsAllocPrizeFromApi()
-        .then(function(resp) {
-          if (!resp || resp.success !== true) {
-            throw new Error((resp && resp.message) ? resp.message : "Lỗi kết nối.");
-          }
-          
+      qcadsAllocPrizeFromApi().then(function(resp) {
+          if (!resp || resp.success !== true) throw new Error((resp && resp.message) ? resp.message : "Lỗi kết nối.");
           var selectedIndex = Number(resp.prize_id);
-          if (!isFinite(selectedIndex) || selectedIndex < 0 || selectedIndex >= segments.length) {
-            throw new Error("Dữ liệu giải thưởng không hợp lệ.");
-          }
-
-          apiResult = { 
-            index: selectedIndex, 
-            winMoney: LIXI_MAP[selectedIndex], 
-            vcode: window.pendingCouponCode || NA_makeVoucherCode()
-          };
-          
+          if (!isFinite(selectedIndex) || selectedIndex < 0 || selectedIndex >= segments.length) throw new Error("Dữ liệu giải thưởng không hợp lệ.");
+          apiResult = { index: selectedIndex, winMoney: LIXI_MAP[selectedIndex], vcode: window.pendingCouponCode || NA_makeVoucherCode() };
           if (apiResult.winMoney === undefined) apiResult.winMoney = 100;
-
           isApiReturned = true;
           startDeceleration(currentDeg, selectedIndex);
-        })
-    .catch(function(err) {
-      isApiReturned = true;
-      spinning = false;
-      if (spinFrameId) cancelAnimationFrame(spinFrameId); 
-      
-      qcadsShowAlert(err.message || "Lỗi kết nối kho quà.");
-      drawWheel();
-    });
+        }).catch(function(err) {
+          isApiReturned = true;
+          spinning = false;
+          if (spinFrameId) cancelAnimationFrame(spinFrameId); 
+          qcadsShowAlert(err.message || "Lỗi kết nối kho quà.");
+          drawWheel();
+        });
 
       function startDeceleration(startDegree, targetIndex) {
         var segmentArc = 360 / segments.length;
         var prizeCenter = (targetIndex * segmentArc) + (segmentArc / 2);
         var targetRotation = 270 - prizeCenter;
-        
         var currentMod = startDegree % 360;
         var distToTarget = targetRotation - currentMod;
         if (distToTarget < 0) distToTarget += 360;
-        
         var extraSpins = 360 * 4;
         var totalDistance = distToTarget + extraSpins;
-        
         var finalDegree = startDegree + totalDistance;
         var duration = 4000; 
         var startTimestamp = null;
@@ -1209,11 +1045,9 @@
         function rotateDecelerate(timestamp) {
           if (!startTimestamp) startTimestamp = timestamp;
           var progress = timestamp - startTimestamp;
-          
           if (progress < duration) {
             var ease = 1 - Math.pow(1 - progress / duration, 3); 
             var currentAnimDeg = startDegree + (totalDistance * ease);
-
             ctx.clearRect(0, 0, size, size);
             ctx.save();
             ctx.translate(center, center);
@@ -1221,24 +1055,17 @@
             ctx.translate(-center, -center);
             drawWheel();
             ctx.restore();
-
             requestAnimationFrame(rotateDecelerate);
-    } else {
+          } else {
             isApiReturned = true;
             spinning = false;
-            
-            if (window.pendingUserPhone) {
-                localStorage.setItem('NA_SPUN_' + window.pendingUserPhone, 'true');
-            }
-
+            if (window.pendingUserPhone) localStorage.setItem('NA_SPUN_' + window.pendingUserPhone, 'true');
             window.pendingSegment = segments[targetIndex];
             window.NA_LAST_WIN = apiResult.winMoney;
             window.NA_LAST_CODE = apiResult.vcode;
-
             NA_showLixiView();
             NAwinValue.innerText = "Anh/Chị nhận được " + qcadsFormatResult(apiResult.winMoney);
             NAvoucherCode.innerText = apiResult.vcode;
-
             NA_show();
             setTimeout(function(){ NA_burst(apiResult.winMoney); }, 160);
           }
@@ -1257,39 +1084,30 @@
 
       if (giftBtn) {
         giftBtn.addEventListener('click', function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          window.showPopup();
+          e.preventDefault(); e.stopPropagation(); window.showPopup();
         }, true);
       }
 
       function hidePopup(){ window.qcadsHidePopup(); }
       if (closeBtn) closeBtn.addEventListener('click', hidePopup);
-      if (dismissLink) dismissLink.addEventListener('click', function (e) {
-        e.preventDefault();
-        hidePopup();
-      });
+      if (dismissLink) dismissLink.addEventListener('click', function (e) { e.preventDefault(); hidePopup(); });
 
       function isPhoneValid(phone){ return /^0\d{9}$/.test(phone); }
 
       if (form) {
         form.addEventListener('submit', function (e) {
           e.preventDefault();
-
           var name = form.elements['name'].value.trim();
           var phone = form.elements['phone'].value.trim();
-
           if (!isPhoneValid(phone)) {
             qcadsShowAlert('Số điện thoại không hợp lệ (phải có 10 số và bắt đầu bằng 0).');
             form.elements['phone'].focus();
             return;
           }
-
           if (localStorage.getItem('NA_SPUN_' + phone)) {
               qcadsShowAlert('Số điện thoại ' + phone + ' đã tham gia quay thưởng rồi!');
               return;
           }
-
           var couponCode = 'NA' + Math.floor(100000 + Math.random() * 900000);
           window.pendingUserName = name;
           window.pendingUserPhone = phone; 
@@ -1297,16 +1115,13 @@
 
           form.style.display = 'none';
           wheelContainer.style.display = 'block';
-
           var wheelBox = document.getElementById('qcadsWheelBox');
           if (wheelBox) wheelBox.style.display = '';
-
           var res = document.getElementById('result');
           if (res) res.style.display = '';
           if (res) res.innerText = '';
         });
       }
-
       if (spinBtn) spinBtn.addEventListener('click', spin);
     }
 
@@ -1317,95 +1132,29 @@
     }
   </script>
 
-  <script type="text/javascript">
-    function qcadsHasPopupWidget(el) {
-      while (el && el !== document) {
-        if (el.className && typeof el.className === 'string' && el.className.indexOf('popup-widget') !== -1) return true;
-        el = el.parentNode;
-      }
-      return false;
-    }
-    var qcadsPopup = document.querySelector('.popup-widget');
-
-    document.addEventListener('contextmenu', function (e) {
-      if (qcadsHasPopupWidget(e.target)) e.preventDefault();
-    });
-    document.addEventListener('keydown', function (e) {
-      if (!qcadsHasPopupWidget(e.target)) return;
-
-      var key = (e.key || '').toLowerCase();
-      var isCtrl = !!e.ctrlKey;
-      var forbidden = { u:1, s:1, c:1, x:1, i:1 };
-
-      if ((isCtrl && forbidden[key]) || e.key === 'F12') e.preventDefault();
-    });
-    if (qcadsPopup) {
-      qcadsPopup.style.userSelect = 'none';
-      qcadsPopup.addEventListener('copy', function (e) { e.preventDefault(); });
-      qcadsPopup.addEventListener('cut', function (e) { e.preventDefault(); });
-    }
-  </script>
-
   <script>
     (function () {
       var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduce) return;
-
       if (typeof confetti === 'undefined') return;
 
       var fxCanvas = document.createElement('canvas');
       fxCanvas.id = 'qcads-tet-fx';
-      fxCanvas.style.cssText =
-        'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:180000;';
+      fxCanvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:180000;';
       document.body.appendChild(fxCanvas);
 
       var myConfetti = confetti.create(fxCanvas, { resize: true, useWorker: true });
-
-      var blossomShape = (myConfetti.shapeFromText)
-        ? myConfetti.shapeFromText({ text: '🌼', scalar: 1.15 })
-        : 'circle';
-
-      var rainTimer = null;
-      var fireTimer = null;
+      var blossomShape = (myConfetti.shapeFromText) ? myConfetti.shapeFromText({ text: '🌼', scalar: 1.15 }) : 'circle';
+      var rainTimer = null, fireTimer = null;
 
       function blossomRainTick() {
-        myConfetti({
-          particleCount: 2,
-          angle: 90,
-          spread: 55,
-          startVelocity: 0,
-          ticks: 320,
-          origin: { x: Math.random(), y: -0.08 },
-          gravity: 0.33,
-          drift: (Math.random() - 0.5) * 0.7,
-          scalar: 1.05,
-          shapes: [blossomShape]
-        });
+        myConfetti({ particleCount: 2, angle: 90, spread: 55, startVelocity: 0, ticks: 320, origin: { x: Math.random(), y: -0.08 }, gravity: 0.33, drift: (Math.random() - 0.5) * 0.7, scalar: 1.05, shapes: [blossomShape] });
       }
 
       function fireworkBurst() {
-        var x = Math.random() * 0.78 + 0.11;
-        var y = Math.random() * 0.25 + 0.18;
-
-        myConfetti({
-          particleCount: 110,
-          startVelocity: 58,
-          spread: 360,
-          ticks: 240,
-          origin: { x: x, y: y },
-          scalar: 0.95,
-          colors: ['#ffde59', '#ff3b3b', '#ffd166', '#ffffff', '#ff9ad5']
-        });
-
-        myConfetti({
-          particleCount: 28,
-          startVelocity: 32,
-          spread: 220,
-          ticks: 180,
-          origin: { x: x, y: y },
-          scalar: 0.7,
-          colors: ['#fff7c2', '#ffffff']
-        });
+        var x = Math.random() * 0.78 + 0.11, y = Math.random() * 0.25 + 0.18;
+        myConfetti({ particleCount: 110, startVelocity: 58, spread: 360, ticks: 240, origin: { x: x, y: y }, scalar: 0.95, colors: ['#ffde59', '#ff3b3b', '#ffd166', '#ffffff', '#ff9ad5'] });
+        myConfetti({ particleCount: 28, startVelocity: 32, spread: 220, ticks: 180, origin: { x: x, y: y }, scalar: 0.7, colors: ['#fff7c2', '#ffffff'] });
       }
 
       function startTetFX() {
@@ -1417,45 +1166,23 @@
       function stopTetFX() {
         if (rainTimer) { clearInterval(rainTimer); rainTimer = null; }
         if (fireTimer) { clearInterval(fireTimer); fireTimer = null; }
-        try {
-          var ctx = fxCanvas.getContext('2d');
-          ctx && ctx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
-        } catch(e) {}
+        try { var ctx = fxCanvas.getContext('2d'); ctx && ctx.clearRect(0, 0, fxCanvas.width, fxCanvas.height); } catch(e) {}
       }
 
       window.qcadsTetFX_start = startTetFX;
       window.qcadsTetFX_stop  = stopTetFX;
 
       var _show = window.showPopup;
-      window.showPopup = function () {
-        if (typeof _show === 'function') _show();
-        startTetFX();
-      };
+      window.showPopup = function () { if (typeof _show === 'function') _show(); startTetFX(); };
 
       var _hide = window.qcadsHidePopup;
-      window.qcadsHidePopup = function () {
-        if (typeof _hide === 'function') _hide();
-        stopTetFX();
-      };
+      window.qcadsHidePopup = function () { if (typeof _hide === 'function') _hide(); stopTetFX(); };
 
       document.addEventListener('visibilitychange', function () {
         if (document.hidden) stopTetFX();
-        else {
-          var popup = document.getElementById('qcadsPopup');
-          if (popup && popup.style.display === 'flex') startTetFX();
-        }
+        else { var popup = document.getElementById('qcadsPopup'); if (popup && popup.style.display === 'flex') startTetFX(); }
       });
-
     })();
-
-    (function() {
-        const styleTitle = 'font-size: 40px; font-weight: bold; color: red; text-shadow: 1px 1px 0px black;';
-        const styleMsg = 'font-size: 16px; color: #333;';
-
-        console.log('%cDừng lại!', styleTitle);
-        console.log('%cĐây là tính năng dành cho nhà phát triển. Nếu ai đó bảo bạn dán mã vào đây để kích hoạt tính năng hay hack tài khoản, đó là lừa đảo!', styleMsg);
-    })();
-      
   </script>
 
 </body>
